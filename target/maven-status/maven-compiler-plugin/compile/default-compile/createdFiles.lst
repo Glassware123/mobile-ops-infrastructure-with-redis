@@ -1,0 +1,7 @@
+com/test/service/XMobileService.class
+com/test/repository/XMobileRepository.class
+com/test/domain/XMobileUser.class
+com/test/controller/NotifyController.class
+com/test/JmsRedisTestApplication.class
+com/test/service/SubscriberService.class
+com/test/subscriber/Subscriber.class
