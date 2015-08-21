@@ -4,8 +4,9 @@ import com.test.domain.XMobileUser;
 import com.test.subscriber.Subscriber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
+
 import com.test.repository.XMobileRepository;
+import redis.clients.jedis.Jedis;
 
 
 import java.util.List;
@@ -13,12 +14,21 @@ import java.util.List;
 @Service
 public class XMobileService {
 
-    Jedis jedis = new Jedis("localhost", 6379);
-    final Subscriber subscriber = new Subscriber();
+
+    private static Jedis jedis = new Jedis("localhost", 6379);
+
+    private static Subscriber subscriber = new Subscriber();
+
     @Autowired
     public XMobileRepository xMobileRepository;
 
+    @Autowired
+    public SubscriberService subscriberService;
+
     public void controlCredit() {
+        if (subscriberService.checkSubscriber) {
+            subscriber.unsubscribe();
+        }
         List<XMobileUser> xMobileUsers = xMobileRepository.findAll();
         for (XMobileUser xMobileUser : xMobileUsers) {
             if (xMobileUser.getCredit() < 1) {
@@ -28,6 +38,10 @@ public class XMobileService {
     }
 
     public void controlSMS() {
+        if (subscriberService.checkSubscriber) {
+            subscriber.unsubscribe();
+        }
+
         List<XMobileUser> xMobileUsers = xMobileRepository.findAll();
         for (XMobileUser xMobileUser : xMobileUsers) {
             if (xMobileUser.getSMS() < 10) {
@@ -37,6 +51,9 @@ public class XMobileService {
     }
 
     public void controlInternet() {
+        if (subscriberService.checkSubscriber) {
+            subscriber.unsubscribe();
+        }
         List<XMobileUser> xMobileUsers = xMobileRepository.findAll();
         for (XMobileUser xMobileUser : xMobileUsers) {
             if (xMobileUser.getInternet() < 100) {
@@ -46,6 +63,9 @@ public class XMobileService {
     }
 
     public void controlMinute() {
+        if (subscriberService.checkSubscriber) {
+            subscriber.unsubscribe();
+        }
         List<XMobileUser> xMobileUsers = xMobileRepository.findAll();
         for (XMobileUser xMobileUser : xMobileUsers) {
             if (xMobileUser.getMinutes() < 60) {

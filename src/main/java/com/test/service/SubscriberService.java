@@ -8,25 +8,24 @@ import redis.clients.jedis.Jedis;
 @Service
 public class SubscriberService {
 
-    Subscriber subscriber = new Subscriber();
-    Jedis jedis = new Jedis("localhost", 6379);
+    public boolean checkSubscriber=false;
+    private static Jedis jedis = new Jedis("localhost", 6379);
+    private static Subscriber subscriber = new Subscriber();
 
     @Async
-    public void listenSubscriber() {
+    public void listenSubscriber() throws InterruptedException {
         while (true) {
-            listen();
+            listen("creditChannel");
+            listen("smsChannel");
+            listen("minuteChannel");
+            listen("internetChannel");
         }
     }
 
-    private void listen() {
-        listen("smsChannel");
-        listen("minuteChannel");
-        listen("internetChannel");
-        listen("creditChannel");
-    }
-
-    private void listen(String channel) {
+    private void listen(String channel) throws InterruptedException {
 
         jedis.subscribe(subscriber, channel);
+        checkSubscriber=true;
     }
+
 }
