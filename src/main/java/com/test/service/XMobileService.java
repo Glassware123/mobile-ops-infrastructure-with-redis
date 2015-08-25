@@ -17,8 +17,6 @@ public class XMobileService {
 
     private static Jedis jedis = new Jedis("localhost", 6379);
 
-    private static Subscriber subscriber = new Subscriber();
-
     @Autowired
     public XMobileRepository xMobileRepository;
 
@@ -60,5 +58,9 @@ public class XMobileService {
                 jedis.publish("minuteChannel", xMobileUser.getPhoneNumber());
             }
         }
+    }
+
+    public void findByPhoneNumber(){
+
     }
 }

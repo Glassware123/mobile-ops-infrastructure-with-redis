@@ -12,7 +12,7 @@ public class Subscriber extends JedisPubSub {
     }
     @Override
     public void onSubscribe(String channel, int subscribedChannels) {
-        System.out.println("onSubscribe");
+        System.out.println("onSubscribe "+channel);
 
     }
     @Override
