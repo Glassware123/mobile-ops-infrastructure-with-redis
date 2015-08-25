@@ -26,9 +26,7 @@ public class XMobileService {
     public SubscriberService subscriberService;
 
     public void controlCredit() {
-        if (subscriberService.checkSubscriber) {
-            subscriber.unsubscribe();
-        }
+
         List<XMobileUser> xMobileUsers = xMobileRepository.findAll();
         for (XMobileUser xMobileUser : xMobileUsers) {
             if (xMobileUser.getCredit() < 1) {
@@ -38,10 +36,6 @@ public class XMobileService {
     }
 
     public void controlSMS() {
-        if (subscriberService.checkSubscriber) {
-            subscriber.unsubscribe();
-        }
-
         List<XMobileUser> xMobileUsers = xMobileRepository.findAll();
         for (XMobileUser xMobileUser : xMobileUsers) {
             if (xMobileUser.getSMS() < 10) {
@@ -51,9 +45,6 @@ public class XMobileService {
     }
 
     public void controlInternet() {
-        if (subscriberService.checkSubscriber) {
-            subscriber.unsubscribe();
-        }
         List<XMobileUser> xMobileUsers = xMobileRepository.findAll();
         for (XMobileUser xMobileUser : xMobileUsers) {
             if (xMobileUser.getInternet() < 100) {
@@ -63,9 +54,6 @@ public class XMobileService {
     }
 
     public void controlMinute() {
-        if (subscriberService.checkSubscriber) {
-            subscriber.unsubscribe();
-        }
         List<XMobileUser> xMobileUsers = xMobileRepository.findAll();
         for (XMobileUser xMobileUser : xMobileUsers) {
             if (xMobileUser.getMinutes() < 60) {

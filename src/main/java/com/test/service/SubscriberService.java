@@ -8,7 +8,6 @@ import redis.clients.jedis.Jedis;
 @Service
 public class SubscriberService {
 
-    public boolean checkSubscriber=false;
     private static Jedis jedis = new Jedis("localhost", 6379);
     private static Subscriber subscriber = new Subscriber();
 
@@ -24,8 +23,19 @@ public class SubscriberService {
 
     private void listen(String channel) throws InterruptedException {
 
-        jedis.subscribe(subscriber, channel);
-        checkSubscriber=true;
+        Thread subscriberThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    jedis.subscribe(subscriber, channel);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        subscriberThread.start();
+        subscriberThread.sleep(1000);
+        subscriberThread.interrupt();
     }
 
 }
